@@ -22,7 +22,7 @@ enabled_default         = True  # Default state for whether new connections are 
 enabled_mutate_rate     = 0.01  # Probably mutation will replace (50/50 chance of True or False) the enabled status of a connection.
 
 feed_forward            = True  # Only allow feed-forward networks
-initial_connection      = partial_nodirect # All nodes fully connected initially
+initial_connection      = partial_nodirect 0.5 # All nodes fully connected initially
 
 # Network (initial population) parameters
 num_hidden              = 0   # Number of initial hidden nodes

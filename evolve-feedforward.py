@@ -1,13 +1,15 @@
+from __future__ import print_function
+from snake import *
+from replay_winner import *
+from config import Config
+
+
 import multiprocessing
 import pickle
 import os
 import neat
 import visualize
 import sys
-
-from __future__ import print_function
-from snake import *
-from replay_winner import *
 
 
 def eval_genomes(genomes, config):
@@ -46,23 +48,29 @@ def run(config_file):
     Configure NEAT from a file and run the evolutionary algorithm to find the best performing genome.
 
     """
-    # Load configuration specified in the given file.
+    # Load configuration into a NEAT object.
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,
                          config_file)
 
-    # Create the population, which is the top-level object for a NEAT run.
+    #Set results directory
+    if not os.path.exists(Config.RESULTS_DIR):
+        os.makedirs(Config.RESULTS_DIR)
+
+    # Create the population
     p = neat.Population(config)
 
     # Add various reporters that log the process to the terminal and provide statistics.
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(5))
+    p.add_reporter(neat.Checkpointer(10, filename_prefix=f"{Config.RESULTS_DIR}/population-"))
 
     # Use parallel evaluation to efficiently utilize available CPU cores.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
-    winner = p.run(pe.evaluate, n=100)  # Run the evaluation for up to 100 generations.
+
+    # Runs NEAT’s genetic algorithm for at most n generations
+    winner = p.run(pe.evaluate, n=Config.N_RUNS)  
 
     # Save the winner.
     with open('winner-feedforward', 'wb') as f:
@@ -82,8 +90,7 @@ def test_population(config_file, pop_file):
 
 
 
-
 if __name__ == '__main__':
     local_dir = os.path.dirname(__file__)
-    config_path = os.path.join(local_dir, 'config-feedforward')
+    config_path = os.path.join(local_dir, 'config-neat')
     run(config_path)

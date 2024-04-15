@@ -1,5 +1,6 @@
 from __future__ import print_function
 from snake import *
+from config import *
 
 import multiprocessing
 import pickle
@@ -9,6 +10,7 @@ import visualize
 import sys
 
 #python3 replay_winner.py target_pursuit_2000_results/winner-feedforward
+
 
 def replay_genome(genome, config):
     net = neat.nn.FeedForwardNetwork.create(genome, config) # Initialize the neural network from the passed genome.
@@ -30,7 +32,7 @@ def replay_genome(genome, config):
         0: 'Up', 1 : "Left", 2 : "Down", 3 : "Right"
     }
 
-    # visualize.draw_net(config, genome, False, node_names=node_names, filename="winner-feedforward.gv")
+    visualize.draw_net(config, genome, False, node_names=node_names, filename=Paths.DRAW_NET_PATH) # Visualize the neural network.
 
     simulate_animation(net, genome, config) # Simulate the environment with a GUI.
 
@@ -46,9 +48,5 @@ def test_winner(config_file, genome):
 
 if __name__ == '__main__':
     local_dir = os.path.dirname(__file__)
-    config_path = os.path.join(local_dir, 'config-feedforward')
-    if len(sys.argv) == 2:
-        test_winner(config_path, sys.argv[1])
-    else:
-        print("Invalid input")
-    
+    config_path = os.path.join(local_dir, Paths.NEAT_CONFIG_PATH)
+    test_winner(config_path, Paths.WINNER_PATH)
