@@ -1,80 +1,88 @@
+#https://neat-python.readthedocs.io/en/latest/config_file.html
+
 [NEAT]
-fitness_criterion     = max
-fitness_threshold     = 100
-pop_size              = 2000
-reset_on_extinction   = False
+# General settings for the NEAT algorithm
+fitness_criterion     = max   # Use the maximum fitness value found within the current population to decide when to stop the run
+fitness_threshold     = 100   # The fitness at which the simulation will stop if reached
+pop_size              = 2000  # The total population size
+reset_on_extinction   = False # Do not reset the simulation if all genomes go extinct
+
 
 [DefaultGenome]
-# node activation options
-activation_default      = sigmoid
-activation_mutate_rate  = 0.0
-activation_options      = sigmoid
+# Genome compatibility options
+compatibility_disjoint_coefficient = 1.0 # Importance of disjoint genes in the compatibility score
+compatibility_weight_coefficient   = 0.5 # Importance of weight differences in the compatibility score
 
-# node aggregation options
-aggregation_default     = sum
-aggregation_mutate_rate = 0.0
-aggregation_options     = sum
+# Connection add/remove rates
+conn_add_prob           = 0.5 # Probability that mutation adds a connection between existing nodes. 
+conn_delete_prob        = 0.5 # Probability that mutation removes a connection between existing nodes. 
 
-# node bias options
-bias_init_mean          = 0.0
-bias_init_stdev         = 1.0
-bias_max_value          = 30.0
-bias_min_value          = -30.0
-bias_mutate_power       = 0.5
-bias_mutate_rate        = 0.7
-bias_replace_rate       = 0.1
+# Connection enable options
+enabled_default         = True  # Default state for whether new connections are enabled
+enabled_mutate_rate     = 0.01  # Probably mutation will replace (50/50 chance of True or False) the enabled status of a connection.
 
-# genome compatibility options
-compatibility_disjoint_coefficient = 1.0
-compatibility_weight_coefficient   = 0.5
+feed_forward            = True  # Only allow feed-forward networks
+initial_connection      = partial_nodirect # All nodes fully connected initially
 
-# connection add/remove rates
-conn_add_prob           = 0.5
-conn_delete_prob        = 0.5
+# Network (initial population) parameters
+num_hidden              = 0   # Number of initial hidden nodes
+num_inputs              = 12  # Number of input nodes
+num_outputs             = 4   # Number of output nodes
 
-# connection enable options
-enabled_default         = True
-enabled_mutate_rate     = 0.01
+# Node add/remove rates
+node_add_prob           = 0.2 # Probability that mutation will add a new node
+node_delete_prob        = 0.2 # Probability that mutation will delete an existing node
 
-feed_forward            = True
-initial_connection      = full
+# Node bias settings
+bias_init_mean          = 0.0   # Mean of the initial distribution of biases
+bias_init_stdev         = 1.0   # Standard deviation of the initial bias distribution
+bias_max_value          = 30.0  # Maximum value of node bias
+bias_min_value          = -30.0 # Minimum value of node bias
+bias_mutate_power       = 0.5   # Std of the zero-centered gaussian distribution from which a bias mutation is drawn
+bias_mutate_rate        = 0.7   # Probability mutation changes bias by adding a random value.
+bias_replace_rate       = 0.1   # Probability mutation replaces bias with a newly chosen random value.
 
-# node add/remove rates
-node_add_prob           = 0.2
-node_delete_prob        = 0.2
+# Connection weight options
+weight_init_mean        = 0.0  # Mean of initial weight distribution
+weight_init_stdev       = 1.0  # Standard deviation of initial weight distribution
+weight_max_value        = 30   # Maximum connection weight
+weight_min_value        = -30  # Minimum connection weight
+weight_mutate_power     = 0.5  # Std of the zero-centered gaussian distribution from which a weight mutation is drawn
+weight_mutate_rate      = 0.8  # Probability mutation changes weight by adding a random value.
+weight_replace_rate     = 0.1  # Probability mutation replaces weight with a newly chosen random value.
 
-# network (initial population) parameters
-num_hidden              = 0
-num_inputs              = 12
-num_outputs             = 4
+#More parameters
+single_structural_mutation = False # Whether only one structural mutation will be allowed per genome per generation
 
-# node response options
-response_init_mean      = 1.0
-response_init_stdev     = 0.0
-response_max_value      = 30.0
-response_min_value      = -30.0
-response_mutate_power   = 0.0
-response_mutate_rate    = 0.0
-response_replace_rate   = 0.0
+# Node response settings [Disabled]
+response_init_mean      = 1.0   # Mean of initial response values
+response_init_stdev     = 0.0   # Standard deviation of initial response values
+response_max_value      = 30.0  # Maximum value of node response
+response_min_value      = -30.0 # Minimum value of node response
+response_mutate_power   = 0.0   # Power of mutation in responses
+response_mutate_rate    = 0.0   # Mutation rate for responses
+response_replace_rate   = 0.0   # Rate at which responses are replaced
 
-# connection weight options
-weight_init_mean        = 0.0
-weight_init_stdev       = 1.0
-weight_max_value        = 30
-weight_min_value        = -30
-weight_mutate_power     = 0.5
-weight_mutate_rate      = 0.8
-weight_replace_rate     = 0.1
+# Node activation function settings [Disabled]
+activation_default      = sigmoid # Default activation function for nodes
+activation_mutate_rate  = 0.0     # Rate at which the activation function can mutate (0.0 means no mutations)
+activation_options      = sigmoid # Available activation function options
 
-[DefaultSpeciesSet]
-compatibility_threshold = 3.0
+# Node aggregation function settings [Disabled]
+aggregation_default     = sum    # Default aggregation function for node inputs
+aggregation_mutate_rate = 0.0    # Mutation rate for the aggregation function (0.0 means no mutations)
+aggregation_options     = sum    # Available aggregation function options
+
 
 [DefaultStagnation]
-species_fitness_func = max
-max_stagnation       = 20
-species_elitism      = 2
+#Keeps track of whether species are making progress and helps remove ones that, for a configurable number of generations, are not.
+species_fitness_func = max   # Function to calculate species fitness
+max_stagnation       = 20    # Maximum number of generations without improvement before a species is considered stagnant
+species_elitism      = 2     # Number of elite species protected from extinction
+
+[DefaultSpeciesSet]
+compatibility_threshold = 3.0 # Threshold for species compatibility
 
 [DefaultReproduction]
-elitism            = 2
-survival_threshold = 0.2
-
+elitism            = 2       # Number of top individuals to carry over to the next generation
+survival_threshold = 0.2     # Proportion of species allowed to reproduce based on fitness

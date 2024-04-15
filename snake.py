@@ -223,21 +223,20 @@ def draw_connections(first_set, second_set, net, genome, node_centers):
         screen.blit(surf, (0, 0))
 
 def draw_network(net, genome, node_centers, hidden_nodes):
-
-  node_names = {
-      -1 : "d_N_wall",
-      -2 : "d_S_wall",
-      -3 : "d_E_wall",
-      -4 : "d_W_wall",
-      -5 : "tail_N",
-      -6 : "tail_S",
-      -7 : "tail_E",
-      -8 : "tail_W",
-      -9 : "apple_N",
-      -10 : "apple_S",
-      -11 : "apple_E",
-      -12 : "apple_W",
-      0: 'up', 1 : "left", 2 : "down", 3 : "right"
+  node_names = { 
+      -1 : "Wall_N",
+      -2 : "Wall_S",
+      -3 : "Wall_E",
+      -4 : "Wall_W",
+      -5 : "Tail_N",
+      -6 : "Tail_S",
+      -7 : "Tail_E",
+      -8 : "Tail_W",
+      -9 : "Apple_N",
+      -10 : "Apple_S",
+      -11 : "Apple_E",
+      -12 : "Apple_W",
+      0: 'Up', 1 : "Left", 2 : "Down", 3 : "Right"
   }
 
   # draw connections between input and output nodes
