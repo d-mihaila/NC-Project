@@ -54,8 +54,8 @@ def run(config_file):
                          config_file)
 
     #Set results directory
-    if not os.path.exists(Config.RESULTS_DIR):
-        os.makedirs(Config.RESULTS_DIR)
+    if not os.path.exists(f"{Paths.RESULTS_PATH}/checkpoints"):
+        os.makedirs(f"{Paths.RESULTS_PATH}/checkpoints")
 
     # Create the population
     p = neat.Population(config)
@@ -64,7 +64,7 @@ def run(config_file):
     p.add_reporter(neat.StdOutReporter(True))
     stats = neat.StatisticsReporter()
     p.add_reporter(stats)
-    p.add_reporter(neat.Checkpointer(10, filename_prefix=f"{Config.RESULTS_DIR}/population-"))
+    p.add_reporter(neat.Checkpointer(10, filename_prefix=f"{Paths.RESULTS_PATH}/checkpoints/population-"))
 
     # Use parallel evaluation to efficiently utilize available CPU cores.
     pe = neat.ParallelEvaluator(multiprocessing.cpu_count(), eval_genome)
@@ -92,5 +92,5 @@ def test_population(config_file, pop_file):
 
 if __name__ == '__main__':
     local_dir = os.path.dirname(__file__)
-    config_path = os.path.join(local_dir, 'config-neat')
+    config_path = os.path.join(local_dir, Paths.NEAT_CONFIG_PATH)
     run(config_path)

@@ -32,7 +32,8 @@ def replay_genome(genome, config):
         0: 'Up', 1 : "Left", 2 : "Down", 3 : "Right"
     }
 
-    visualize.draw_net(config, genome, False, node_names=node_names, filename=Paths.DRAW_NET_PATH) # Visualize the neural network.
+    # Visualize the neural network.
+    visualize.draw_net(config, genome, False, node_names=node_names, filename=f"{Paths.RESULTS_PATH}/network.gv")
 
     simulate_animation(net, genome, config) # Simulate the environment with a GUI.
 
