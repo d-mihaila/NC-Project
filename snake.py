@@ -1,5 +1,3 @@
-
-
 from random import random
 import random as random_module
 import numpy as np
@@ -16,7 +14,6 @@ dead = False
 NUM_ITERS = 10
 # MAX_TIME_STEPS = 1000
 MIN_TIME_TO_EAT_APPLE = 100
-# ----------------simulation-----------------
 
 # ----------------animation stuff--------------
 interval = 100
@@ -385,3 +382,6 @@ def draw_apple():
   x, y = apple
   rect = pygame.Rect(getLeftTop(x, y), (blockWidth - BUFFER * 2, blockHeight - BUFFER * 2))
   pygame.draw.rect(screen, RED, rect)
+
+if __name__ == "__main__":
+  pass

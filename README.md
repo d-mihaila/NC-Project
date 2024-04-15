@@ -1,11 +1,11 @@
-# 5038W Snake AI
+# Natural Computing Final Project
 
-Daniel Chang, Isaac Liao
+Jasper Pieterse, Daria Mihalia
 
 # How to use:
 1. Git clone
 ```bash
-git clone https://github.com/danielchang2002/5038W_Final.git
+git clone https://github.com/jasperpieterse/NC-Project.git
 ```
 
 2. Install requirements
