@@ -77,8 +77,8 @@ def run(config_file):
         pickle.dump(winner, f)
 
     # Visualize statistics and species progression over generations.
-    visualize.plot_stats(stats, ylog=True, view=True, filename="feedforward-fitness.svg")
-    visualize.plot_species(stats, view=True, filename="feedforward-speciation.svg")
+    visualize.plot_stats(stats, ylog=True, view=True, filename=f"{Paths.RESULTS_PATH}/feedforward-fitness.svg")
+    visualize.plot_species(stats, view=True, filename=f"{Paths.RESULTS_PATH}/feedforward-speciation.svg")
 
 
 def test_population(config_file, pop_file):
