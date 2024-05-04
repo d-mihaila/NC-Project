@@ -16,7 +16,7 @@ def replay_genome(genome, config):
     net = neat.nn.FeedForwardNetwork.create(genome, config) # Initialize the neural network from the passed genome.
 
     # Define the node names for visualization.
-    node_names = { 
+    node_names = {
         -1 : "Wall_N",
         -2 : "Wall_S",
         -3 : "Wall_E",
@@ -27,16 +27,24 @@ def replay_genome(genome, config):
         -8 : "Tail_W",
         -9 : "Apple_N",
         -10 : "Apple_S",
-        -11 : "Apple_E",
+        -11 : "Apple_E",    
         -12 : "Apple_W",
-        -13 : "Wall_NE", 
-        -14 : "Wall_SE", 
-        -15 : "Wall_SW", 
+        -13 : "Wall_NE",
+        -14 : "Wall_SE",
+        -15 : "Wall_SW",
         -16 : "Wall_NW",
         -17 : "Apple_NE",
         -18 : "Apple_SE",
         -19 : "Apple_SW",
-        -20 : "Apple_NW", 
+        -20 : "Apple_NW",
+        -21 : "Obstacle_N",
+        -22 : "Obstacle_S",
+        -23 : "Obstacle_E",
+        -24 : "Obstacle_W",
+        -25 : "Obstacle_NE",
+        -26 : "Obstacle_SE",
+        -27 : "Obstacle_SW",
+        -28 : "Obstacle_NW",
         0: 'Up', 1 : "Left", 2 : "Down", 3 : "Right"
     }
 

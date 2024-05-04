@@ -9,6 +9,7 @@ random_module.seed(42)
 numRows, numCols = 10, 10
 snake = [(3, 3)]
 apple = (5, 5)
+obstacle = (10,10)
 v_x, v_y = 1, 0 
 dead = False
 NUM_ITERS = 10
@@ -17,9 +18,9 @@ MIN_TIME_TO_EAT_APPLE = 100
 
 # ----------------animation stuff--------------
 interval = 100
-NODE_SIZE = 25
+NODE_SIZE = 10
 networkWidth, networkHeight = 700, 900
-gameWidth, gameHeight = 900, 900
+gameWidth, gameHeight = 700, 700
 window_buffer = 25
 screenWidth = window_buffer + networkWidth + window_buffer + gameWidth + window_buffer
 screenHeight = networkHeight + 2 * window_buffer
@@ -41,11 +42,13 @@ def reset():
   global numCols
   global snake
   global apple
+  global obstacle
   global v_x
   global v_y
   global dead
   snake = [((int) (random() * numCols), (int) (random() * numRows))]
   apple = (int) (random() * numCols), (int) (random() * numRows)
+  obstacle = (int) (random() * numCols), (int) (random() * numRows)
   v_x, v_y = 1, 0 
   dead = False
 
@@ -176,6 +179,7 @@ def simulate_animation(net, genome, config):
     draw_square() 
     draw_snake() 
     draw_apple() 
+    draw_obstacle()
     draw_network(net, genome, node_centers, hidden_nodes)
     pygame.display.flip()
   pygame.quit()
@@ -228,7 +232,7 @@ def draw_connections(first_set, second_set, net, genome, node_centers):
         screen.blit(surf, (0, 0))
 
 def draw_network(net, genome, node_centers, hidden_nodes):
-  node_names = { 
+  node_names = {
       -1 : "Wall_N",
       -2 : "Wall_S",
       -3 : "Wall_E",
@@ -241,14 +245,22 @@ def draw_network(net, genome, node_centers, hidden_nodes):
       -10 : "Apple_S",
       -11 : "Apple_E",
       -12 : "Apple_W",
-      -13 : "Wall_NE", 
-      -14 : "Wall_SE", 
-      -15 : "Wall_SW", 
+      -13 : "Wall_NE",
+      -14 : "Wall_SE",
+      -15 : "Wall_SW",
       -16 : "Wall_NW",
       -17 : "Apple_NE",
       -18 : "Apple_SE",
       -19 : "Apple_SW",
-      -20 : "Apple_NW", 
+      -20 : "Apple_NW",
+      -21 : "Obstacle_N",
+      -22 : "Obstacle_S",
+      -23 : "Obstacle_E",
+      -24 : "Obstacle_W",
+      -25 : "Obstacle_NE",
+      -26 : "Obstacle_SE",
+      -27 : "Obstacle_SW",
+      -28 : "Obstacle_NW",
       0: 'Up', 1 : "Left", 2 : "Down", 3 : "Right"
   }
 
@@ -318,6 +330,9 @@ def get_sensory():
 
   # TODO: add the obstacle and make the distances to that as well -- 4 + 4
 
+
+  # TODO (extra): also add an indication of the middle of the tail....
+
   # Inverted distance to wall for diagonal directions
   dist_to_wall_diagonal = [
       1 / (min(numCols - x, y + 1)),       # NE
@@ -325,6 +340,7 @@ def get_sensory():
       1 / (min(x + 1, numRows - y)),       # SW
       1 / (min(x + 1, y + 1))              # NW
   ]
+  # dist_to_wall_diagonal = [0,0,0,0]
 
   # Flag for if will hit tail in this cardinal direction
   will_hit_tail = [0, 0, 0, 0]
@@ -357,12 +373,44 @@ def get_sensory():
       (x > a_x and y < a_y),  # SW
       (x > a_x and y > a_y)   # NW
   ]
+  # apple_info_diagonal = [0,0,0,0]
+
+  # Obstacle's position (assuming top-left corner)
+  ob_x, ob_y = obstacle
+
+  # Cardinal directions to obstacle
+  dist_to_obstacle = [
+      max(0, y - (ob_y + 2)),  # North
+      max(0, ob_y - (y + 1)),  # South
+      max(0, ob_x - (x + 1)),  # East
+      max(0, x - (ob_x + 2))   # West
+  ]
+
+  # Invert distances and prevent division by zero
+  dist_to_obstacle = [1 / (dist + 1) for dist in dist_to_obstacle]
+  
+  # dist_to_obstacle = [0,0,0,0]
+
+
+  # Diagonal directions to obstacle
+  # diagonal distance calculations
+  ne_dist = np.sqrt(min((numCols - x)**2 + (ob_y - y)**2, (ob_x - x)**2 + (numRows - y)**2))
+  se_dist = np.sqrt(min((numCols - x)**2 + (numRows - y)**2, (ob_x - x)**2 + (ob_y - y)**2))
+  sw_dist = np.sqrt(min((x + 1)**2 + (numRows - y)**2, (numCols - ob_x)**2 + (ob_y - y)**2))
+  nw_dist = np.sqrt(min((x + 1)**2 + (y + 1)**2, (numCols - ob_x)**2 + (numRows - ob_y)**2))
+
+  # Ensure to use the smallest of the calculated distances for each direction
+  dist_to_obstacle_diagonal = [1 / (dist + 1) for dist in [ne_dist, se_dist, sw_dist, nw_dist]]
+
+  dist_to_obstacle_diagonal = [0,0,0,0]
 
   # Combine all sensory information into one array
-  sensory_vector = np.array(dist_to_wall + dist_to_wall_diagonal + will_hit_tail + apple_info + apple_info_diagonal)
+  sensory_vector = np.array(
+      dist_to_wall + dist_to_wall_diagonal + will_hit_tail + 
+      apple_info + apple_info_diagonal + dist_to_obstacle + dist_to_obstacle_diagonal
+  )
 
-  return 1.0 * sensory_vector
-# returns the 12 item array adding all of the 3 elements * 4 directions // plus the 4 + 4 with diagonal 
+  return sensory_vector
 
 def change_direction(code):
   global v_x
@@ -423,6 +471,27 @@ def draw_apple():
   x, y = apple
   rect = pygame.Rect(getLeftTop(x, y), (blockWidth - BUFFER * 2, blockHeight - BUFFER * 2))
   pygame.draw.rect(screen, RED, rect)
+
+# 
+
+# def draw_obstacle(screen, obstacle_color, position, blockWidth, blockHeight):
+def draw_obstacle():
+  '''set up an obstacle that the snake also has to go around
+  Draw a static 4-block wall as an obstacle in the game.
+  '''
+  # 1. first make the location fixed to see behaviour
+  # print("Obstacle:", obstacle, type(obstacle))
+  x, y = obstacle
+  # Adjust the position of each block to be within the game grid using getLeftTop
+  top_left_x, top_left_y = getLeftTop(x, y)
+  for i in range(2):
+      for j in range(2):
+          pygame.draw.rect(screen, ORANGE, pygame.Rect(
+              top_left_x + j * blockWidth,
+              top_left_y + i * blockHeight,
+              blockWidth, blockHeight))
+
+  # 2. location randomly spawned at each timestep
 
 if __name__ == "__main__":
   pass

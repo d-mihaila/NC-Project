@@ -6,14 +6,46 @@ import warnings
 import graphviz
 import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.ticker as ticker
 
+
+# def plot_stats(statistics, ylog=False, view=False, filename='avg_fitness.svg'):
+#     """ Plots the population's average and best fitness with optional log scaling. """
+#     generation = range(len(statistics.most_fit_genomes))
+#     best_fitness = [c.fitness for c in statistics.most_fit_genomes]
+#     avg_fitness = np.array(statistics.get_fitness_mean())
+#     stdev_fitness = np.array(statistics.get_fitness_stdev())
+
+#     plt.figure()
+#     plt.plot(generation, avg_fitness, 'b-', label="average")
+#     plt.plot(generation, avg_fitness - stdev_fitness, 'g-.', label="-1 sd")
+#     plt.plot(generation, avg_fitness + stdev_fitness, 'g-.', label="+1 sd")
+#     plt.plot(generation, best_fitness, 'r-', label="best")
+
+#     plt.title("Population's average and best fitness")
+#     plt.xlabel("Generations")
+#     plt.ylabel("Fitness")
+#     plt.grid(True)
+#     plt.legend(loc="best")
+
+#     if ylog:
+#         plt.gca().set_yscale('log')
+#         # Specify tick locations to ensure regular intervals
+#         plt.gca().set_yticks([np.linspace(0,20,21)])
+#         plt.gca().yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: '{:.16g}'.format(y)))
+#     else:
+#         # Set linear scale y-ticks for regular spacing
+#         max_fitness = max(np.max(avg_fitness + stdev_fitness), np.max(best_fitness))
+#         plt.yticks(np.linspace(0, max_fitness, num=10))  # Adjust 'num' to change number of ticks
+
+#     plt.savefig(filename)
+#     if view:
+#         plt.show()
+
+#     plt.close()
 
 def plot_stats(statistics, ylog=False, view=False, filename='avg_fitness.svg'):
     """ Plots the population's average and best fitness. """
-    if plt is None:
-        warnings.warn("This display is not available due to a missing optional dependency (matplotlib)")
-        return
-
     generation = range(len(statistics.most_fit_genomes))
     best_fitness = [c.fitness for c in statistics.most_fit_genomes]
     avg_fitness = np.array(statistics.get_fitness_mean())
@@ -27,16 +59,22 @@ def plot_stats(statistics, ylog=False, view=False, filename='avg_fitness.svg'):
     plt.title("Population's average and best fitness")
     plt.xlabel("Generations")
     plt.ylabel("Fitness")
-    plt.grid()
+    plt.grid(True)
     plt.legend(loc="best")
+
     if ylog:
-        plt.gca().set_yscale('symlog')
+        plt.gca().set_yscale('log')
+        # Set y-ticks to be more frequent
+        plt.gca().yaxis.set_major_formatter(ticker.FormatStrFormatter('%0.1f'))
+        plt.gca().yaxis.set_minor_formatter(ticker.FormatStrFormatter('%0.1f'))
+        plt.gca().yaxis.set_major_locator(ticker.LogLocator(base=10.0, numticks=20))
 
     plt.savefig(filename)
     if view:
         plt.show()
 
     plt.close()
+
 
 
 def plot_spikes(spikes, view=False, filename=None, title=None):

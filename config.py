@@ -1,5 +1,5 @@
 class Config:   
-    N_RUNS = 10  # Number of runs to evaluate each genome
+    N_RUNS = 50  # Number of runs to evaluate each genome
 
 
 class Paths:
