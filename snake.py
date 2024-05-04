@@ -50,32 +50,35 @@ def reset():
   dead = False
 
 def simulate_headless(net):
-  scores = []
-  for _ in range(NUM_ITERS):
-    reset()
-    last_ate_apple = 0
-    t = 0
-    while True:
-      if dead:
-        break
-      if t - last_ate_apple > MIN_TIME_TO_EAT_APPLE:
-        break
-      
-      sensory_vector = get_sensory()    # get that 12 items array 
-      activation = net.activate(sensory_vector)  
-      # print(activation) 
-      action = np.argmax(activation)
-      # print(action)
-      change_direction(action)
-      apple = step()
-      t += 1
+    ''' Simulate the game without GUI to train or evaluate the neural network. '''
 
-      if apple:
-        last_ate_apple = t
+    scores = []  # List to keep track of scores (snake length) for each iteration
 
-    scores.append(len(snake))
+    for _ in range(NUM_ITERS):  # Loop over a number of game iterations to evaluate performance
+        reset()  # Reset the game environment to start state
+        last_ate_apple = 0  # Track the last time step when an apple was eaten
+        t = 0  # Initialize time step counter
 
-  return np.mean(scores)
+        while True:  # Continue until snake dies or too much time passes without eating an apple
+            if dead:  # Check if the snake has died (hit itself or a wall)
+                break
+            if t - last_ate_apple > MIN_TIME_TO_EAT_APPLE:  # Break if snake hasn't eaten within the allowed time
+                break
+            
+            sensory_vector = get_sensory()  # Get sensory information from the environment
+            activation = net.activate(sensory_vector)  # Process sensory inputs through the network to get outputs
+            action = np.argmax(activation)  # Choose the action corresponding to the highest output neuron
+            change_direction(action)  # Change the snake's direction based on chosen action
+            apple = step()  # Move the snake one step in the game, check for apple eating
+            t += 1  # Increment the time step
+
+            if apple:  # If an apple was eaten during this step
+                last_ate_apple = t  # Update the last time apple was eaten
+
+        scores.append(len(snake))  # Append the length of the snake (score) to the list
+
+    return np.mean(scores)  # Return the average score over all iterations
+
 
 def feed_forward_layers(inputs, outputs, connections, genome):
   """
@@ -238,6 +241,14 @@ def draw_network(net, genome, node_centers, hidden_nodes):
       -10 : "Apple_S",
       -11 : "Apple_E",
       -12 : "Apple_W",
+      -13 : "Wall_NE", 
+      -14 : "Wall_SE", 
+      -15 : "Wall_SW", 
+      -16 : "Wall_NW",
+      -17 : "Apple_NE",
+      -18 : "Apple_SE",
+      -19 : "Apple_SW",
+      -20 : "Apple_NW", 
       0: 'Up', 1 : "Left", 2 : "Down", 3 : "Right"
   }
 
@@ -289,68 +300,69 @@ def draw_snake():
       rect = pygame.Rect(getLeftTop(x, y), (blockWidth - BUFFER * 2, blockHeight - BUFFER * 2))
       pygame.draw.rect(screen, YELLOW if i == len(snake) - 1 else WHITE, rect)
 
+
+
 def get_sensory():
-  '''in this function the snake recieves the sensory input.'''
+  ''' In this function the snake receives the sensory input. '''
 
-  def get_sensory():
-    ''' In this function the snake receives the sensory input. '''
+  # Snake's head position
+  x, y = snake[-1]
 
-    # Snake's head position
-    x, y = snake[-1]
+  # Inverted distance to wall for cardinal directions
+  dist_to_wall = [
+      1 / (y + 1),        # North
+      1 / (numRows - y),  # South
+      1 / (numCols - x),  # East
+      1 / (x + 1)         # West
+  ]
 
-    # Inverted distance to wall for cardinal directions
-    dist_to_wall = [
-        1 / (y + 1),        # North
-        1 / (numRows - y),  # South
-        1 / (numCols - x),  # East
-        1 / (x + 1)         # West
-    ]
+  # TODO: add the obstacle and make the distances to that as well -- 4 + 4
 
-    # Inverted distance to wall for diagonal directions
-    dist_to_wall_diagonal = [
-        1 / (min(numCols - x, y + 1)),       # NE
-        1 / (min(numCols - x, numRows - y)), # SE
-        1 / (min(x + 1, numRows - y)),       # SW
-        1 / (min(x + 1, y + 1))              # NW
-    ]
+  # Inverted distance to wall for diagonal directions
+  dist_to_wall_diagonal = [
+      1 / (min(numCols - x, y + 1)),       # NE
+      1 / (min(numCols - x, numRows - y)), # SE
+      1 / (min(x + 1, numRows - y)),       # SW
+      1 / (min(x + 1, y + 1))              # NW
+  ]
 
-    # Flag for if will hit tail in this cardinal direction
-    will_hit_tail = [0, 0, 0, 0]
-    for (body_x, body_y) in snake[:-1]:
-        if body_x == x:
-            if body_y > y:
-                will_hit_tail[1] = 1  # South
-            else:
-                will_hit_tail[0] = 1  # North
-        elif body_y == y:
-            if body_x > x:
-                will_hit_tail[2] = 1  # East
-            else:
-                will_hit_tail[3] = 1  # West
+  # Flag for if will hit tail in this cardinal direction
+  will_hit_tail = [0, 0, 0, 0]
+  for (body_x, body_y) in snake[:-1]:
+      if body_x == x:
+          if body_y > y:
+              will_hit_tail[1] = 1  # South
+          else:
+              will_hit_tail[0] = 1  # North
+      elif body_y == y:
+          if body_x > x:
+              will_hit_tail[2] = 1  # East
+          else:
+              will_hit_tail[3] = 1  # West
 
-    a_x, a_y = apple
-    
-    # Apple in cardinal directions
-    apple_info = [
-        x == a_x and a_y < y,  # North
-        x == a_x and a_y > y,  # South
-        y == a_y and a_x > x,  # East
-        y == a_y and a_x < x,  # West
-    ]
+  a_x, a_y = apple
+  
+  # Apple in cardinal directions
+  apple_info = [
+      x == a_x and a_y < y,  # North
+      x == a_x and a_y > y,  # South
+      y == a_y and a_x > x,  # East
+      y == a_y and a_x < x,  # West
+  ]
 
-    # Apple in diagonal directions
-    apple_info_diagonal = [
-        (x < a_x and y > a_y),  # NE
-        (x < a_x and y < a_y),  # SE
-        (x > a_x and y < a_y),  # SW
-        (x > a_x and y > a_y)   # NW
-    ]
+  # Apple in diagonal directions
+  apple_info_diagonal = [
+      (x < a_x and y > a_y),  # NE
+      (x < a_x and y < a_y),  # SE
+      (x > a_x and y < a_y),  # SW
+      (x > a_x and y > a_y)   # NW
+  ]
 
-    # Combine all sensory information into one array
-    sensory_vector = np.array(dist_to_wall + dist_to_wall_diagonal + will_hit_tail + apple_info + apple_info_diagonal)
+  # Combine all sensory information into one array
+  sensory_vector = np.array(dist_to_wall + dist_to_wall_diagonal + will_hit_tail + apple_info + apple_info_diagonal)
 
-    return 1.0 * sensory_vector
- # returns the 12 item array adding all of the 3 elements * 4 directions
+  return 1.0 * sensory_vector
+# returns the 12 item array adding all of the 3 elements * 4 directions // plus the 4 + 4 with diagonal 
 
 def change_direction(code):
   global v_x
