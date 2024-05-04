@@ -29,6 +29,14 @@ def replay_genome(genome, config):
         -10 : "Apple_S",
         -11 : "Apple_E",
         -12 : "Apple_W",
+        -13 : "Wall_NE", 
+        -14 : "Wall_SE", 
+        -15 : "Wall_SW", 
+        -16 : "Wall_NW",
+        -17 : "Apple_NE",
+        -18 : "Apple_SE",
+        -19 : "Apple_SW",
+        -20 : "Apple_NW", 
         0: 'Up', 1 : "Left", 2 : "Down", 3 : "Right"
     }
 
