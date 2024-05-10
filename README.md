@@ -14,13 +14,3 @@ git clone https://github.com/jasperpieterse/NC-Project.git
 ```bash
 pip3 install -r requirements.txt
 ```
-
-3. Test the best agent
-```bash
-python3 replay_winner target_pursuit_2000_results/winner-feedforward
-```
-
-4. Run experiment
-```bash
-python3 evolve-feedforward.py
-```
