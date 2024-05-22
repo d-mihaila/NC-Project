@@ -14,3 +14,12 @@ We investigate how different input features influence the snake's learning and s
 We analyze the essential components of the NEAT algorithm by systematically removing key components and observing their impact on performance.
 
 ---
+
+<div style="display: flex; justify-content: space-between;">
+  <div style="flex: 1; text-align: left;">
+    <a href="2_literature_review.md" style="text-decoration: none; font-size: 1.2em; border: 1px solid #ccc; padding: 10px; display: inline-block;">&laquo; Previous: Literature Review</a>
+  </div>
+  <div style="flex: 1; text-align: right;">
+    <a href="4_do_it_yourself.md" style="text-decoration: none; font-size: 1.2em; border: 1px solid #ccc; padding: 10px; display: inline-block;">Next: Do It Yourself &raquo;</a>
+  </div>
+</div>
