@@ -4,25 +4,26 @@
   - [1.1 Learning Outcomes](#11-learning-outcomes)
   - [1.2 Project Overview](#12-project-overview)
   - [1.3 Definitions](#13-definitions)
-- [2. Problem Statement](#2-problem-statement)
-- [3. Motivation](#3-motivation)
-- [4. Literature Review](#4-literature-review)
-  - [4.1 NEAT paper](#41-neat-paper)
-  - [4.2 Evolving Deep Network Architectures](#42-evolving-deep-network-architectures)
-  - [4.3 Learning Atari Games using NE](#43-learning-atari-games-using-ne)
-- [5. Methods](#5-methods)
-  - [5.1 Snake-NE](#51-snake-ne)
-  - [5.2 NEAT Setup](#52-neat-setup)
-  - [5.3 Input Strategies](#53-input-strategies)
-  - [5.4 Ablation Experiments](#54-ablation-experiments)
-  - [5.5 Educational Website](#55-educational-website)
-- [6. Results](#6-results)
-  - [6.1 Input Strategy Experiments](#61-input-strategy-experiments)
-  - [6.2 Ablation Experiments Results](#62-ablation-experiments-results)
-- [7. Discussion](#7-discussion)
-  - [7.1 Limitations](#71-limitations)
-  - [7.2 Future Work](#72-future-work)
-- [8. Conclusion](#8-conclusion)
+  - [1.4 Problem Statement](#14-problem-statement)
+  - [1.5 Motivation](#15-motivation)
+- [2. Literature Review](#2-literature-review)
+  - [2.1 NEAT paper](#21-neat-paper)
+  - [2.2 Evolving Deep Network Architectures](#22-evolving-deep-network-architectures)
+  - [2.3 Learning Atari Games using NE](#23-learning-atari-games-using-ne)
+- [3. Methods](#3-methods)
+  - [3.1 Snake-NE](#31-snake-ne)
+  - [3.2 NEAT Setup](#32-neat-setup)
+  - [3.3 Input Strategies](#33-input-strategies)
+  - [3.4 Ablation Experiments](#34-ablation-experiments)
+- [4. Do It Yourself](#4-do-it-yourself)
+- [5. Results](#5-results)
+  - [5.1 Input Strategy Experiments](#51-input-strategy-experiments)
+  - [5.2 Ablation Experiments Results](#52-ablation-experiments-results)
+- [6. Discussion](#6-discussion)
+  - [6.1 Limitations](#61-limitations)
+  - [6.2 Future Work](#62-future-work)
+- [7. Conclusion](#7-conclusion)
+
 
 ---
 
@@ -53,61 +54,61 @@ In short, NE aims to improve the computation efficiency and performance of a neu
 
 **Evolutionary Algorithms**
 
-# 2. Problem Statement
+## 1.4 Problem Statement
 
-# 3. Motivation
+## 1.5 Motivation
 Snake-NE offers several benefits as an educational tool, making learning more engaging and accessible by using the simple yet fun Snake game to demonstrate complex neuroevolution concepts.
 
 *hint to the extensive literature review // talk here about then to use it briefly. 
 
-# 4. Literature Review
+# 2. Literature Review
 In this section, we review relevant literature that underpins our project and provides context for our methods and experiments.
 
-## 4.1 NEAT paper
+## 2.1 NEAT paper
 
-## 4.2 Evolving Deep Network Architectures
+## 2.2 Evolving Deep Network Architectures
 We explore the adaptation of NEAT for Neural Architecture Search (NAS) and discuss bilevel optimization, scalability, and adaptation to environmental constraints.
 * some extended methods
 
-## 4.3 Learning Atari Games using NE
+## 2.3 Learning Atari Games using NE
 We investigate the effectiveness of non-gradient-based evolutionary algorithms (EAs) for training deep neural networks on reinforcement learning tasks, such as Atari games.
 * basically *when* NE is good
 
-# 5. Methods
+# 3. Methods
 This section details the setup and implementation of our Snake-NE project, including the NEAT algorithm and various experiments.
 
-## 5.1 Snake-NE
+## 3.1 Snake-NE
 The complete source code for our Snake-NE project, developed using the PyGame library, is available on GitHub. The NEAT algorithm was implemented using the neat-python package.
 
-## 5.2 NEAT Setup
+## 3.2 NEAT Setup
 We describe the NEAT algorithm, including network initialization, genetic encoding, crossover strategy, speciation strategy, and mutation strategy.
 
-## 5.3 Input Strategies
+## 3.3 Input Strategies
 We investigate how different input features influence the snake's learning and strategies. This includes experiments with baseline, binary, and collision input strategies.
 
-## 5.4 Ablation Experiments
+## 3.4 Ablation Experiments
 We analyze the essential components of the NEAT algorithm by systematically removing key components and observing their impact on performance.
 
-# Do It Yourself
+# 4. Do It Yourself
 We prepared the google colab for you. Now, it's the time for you to have your first tries with the code, familiarise yourself with it before we go on implementing our methods. 
 
-# 6. Results
+# 5. Results
 This section presents the outcomes of our experiments, focusing on input strategy experiments and ablation experiments.
 
-## 6.1 Input Strategy Experiments
+## 5.1 Input Strategy Experiments
 We describe the results of various input strategy experiments, highlighting the best-performing networks and observed behaviors.
 
-## 6.2 Ablation Experiments Results
+## 5.2 Ablation Experiments Results
 We discuss the findings from our ablation experiments, illustrating the importance of key components in the NEAT algorithm.
 
-# 7. Discussion
+# 6. Discussion
 We reflect on the limitations of our project and propose future work to build on our findings.
 
-## 7.1 Limitations
+## 6.1 Limitations
 We acknowledge the constraints and limitations of our project, such as computational resources and visualization tools.
 
-## 7.2 Future Work
+## 6.2 Future Work
 We suggest potential directions for future research and improvements, including exploring new input strategies, fitness function design, and comparisons with reinforcement learning.
 
-# 8. Conclusion
+# 7. Conclusion
 [To be written]
