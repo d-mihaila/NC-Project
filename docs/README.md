@@ -29,7 +29,7 @@ NOTE: to add references later...!?
 ---
 
 # 1. Introduction
-Welcome to the handbook for our educational project on the neuroevolution snake game. This guide aims to provide both introductory and detailed information about evolutionary algorithms, specifically focusing on the NeuroEvolution of Augmenting Topologies (NEAT) method.
+Welcome to the handbook for our educational project on the neuroevolution snake game. This guide aims to provide both introductory and detailed information about evolutionary algorithms, specifically focusing on the NeuroEvolution of Augmenting Topologies (NEAT) method [@Stanley2002].
 
 ## 1.1 Learning Outcomes [come back to this as a last thing]
 After working through our handbook, we expect you to have the following know-how's (please rephrase):
@@ -75,9 +75,8 @@ Snake-NE offers several benefits as an educational tool, making learning more en
 
 ---
 
-
-
-# 2. Literature Review
+# 2. Literature Review 
+[NOTE sorry but here i kinda used quite a lot of AI to rather get quantity rn to see the whole website play out and will make finetuning afterwards.] 
 In this section, we review relevant literature that underpins our project and provides context for our methods and experiments.
 
 ## 2.1 NEAT paper
@@ -92,9 +91,47 @@ This is the founding paper of the NeuroEvolution of Augmenting Topologies (NEAT)
 [maybe i should only introduce the problems here using also some figures and then the solutions etc we describe in out methods section anyway no?!]
 
 * describe TWEANNs (maybe some of the background subchapters too....!?)
+NEAT is just an example of algorithm that describes how these TWEANNs should be evolved.
 * describe the problems with those TWEANNs as well -- with them figures
-* how does NEAT tackle them -- maybe just reference to our methods section
+The problems with the other TWEANNs include: Competing Conventions, Protecting Innovation with Speciation, Initial Populations and Topological Innovation. Let's now describe each of them.
 
+**Competing Conventions**
+The Competing Conventions Problem, also known as the Permutations Problem, is a significant challenge in neuroevolution. It arises when multiple ways exist to represent a solution in a neural network, causing different genomes to encode the same solution differently. This leads to problematic crossovers during reproduction, often resulting in offspring that lose crucial information.
+
+In the case of a simple three-hidden-unit network, as depicted in Figure 1, the hidden neurons (A, B, and C) can be permuted in 3! = 6 different ways, all representing the same functional solution. When these different permutations are crossed, critical information can be lost. For example, crossing genomes [A, B, C] and [C, B, A] might produce [C, B, C], which lacks some of the original information.
+<img width="796" alt="image" src="https://github.com/d-mihaila/NC-Project/assets/53557315/2b8433af-7ec7-4362-a898-f97ab540b2ec">
+
+Solution: Historical Marking!
+
+**Protecting Innovation with Speciation**
+In TWEANNs, innovation occurs through structural mutations such as adding new nodes or connections to networks. However, these changes often initially decrease the network's fitness. For instance, a new node introduces a nonlinearity or a new connection might reduce fitness before its weight is optimized. Since immediate benefits from these structural changes are unlikely, the innovations might not survive long enough to demonstrate their potential value.
+
+To address this, innovations must be protected to allow sufficient time for optimization. One approach is to add nonfunctional structures, hoping they eventually become useful. However, this can lead to extraneous parameters if these structures never integrate into the functional network.
+
+
+Solution: Explicit Fitness Sharing
+
+
+**Initial Populations and Topological Innovation**
+In many TWEANN systems, the initial population consists of randomly generated topologies, ensuring diversity from the start. However, this approach presents several issues. Random initial populations often include infeasible networks with no valid paths from inputs to outputs, which need to be eliminated over time. More critically, random starting points rarely lead to minimal solutions. These populations typically contain many unnecessary nodes and connections that have not been justified by any evaluation process.
+
+Such extraneous structures must be removed, which is inefficient. Larger networks might dominate due to their high fitness, regardless of their unnecessary complexity. To counteract this, some TWEANNs penalize larger networks in the fitness function. However, determining the appropriate penalty is challenging and problem-specific, making this method ad hoc and potentially altering the intended evolutionary dynamics.
+
+Solution: starting with minimal population
+
+Finally, joining all the 3 solutions together, we obtain this relationship: 
+<img width="796" alt="image" src="https://github.com/d-mihaila/NC-Project/assets/53557315/3aadf5e6-9c7f-46af-af97-cfee932d6dd8">
+
+
+* how does NEAT tackle them -- maybe just reference to our methods section
+<img width="796" alt="image" src="https://github.com/d-mihaila/NC-Project/assets/53557315/a9886265-c498-455d-8821-44afedc9e1de">
+-- description --
+<img width="796" alt="image" src="https://github.com/d-mihaila/NC-Project/assets/53557315/dc8364dd-d096-4116-907c-93c5efcababa">
+-- description --
+
+They also conducted the Ablation experiemnts we will describe in the following chapters as well...!?
+
+Maybe add here some description about conclusion of when this NE is good 
 
 ## 2.2 Evolving Deep Network Architectures
 We explore the adaptation of NEAT for Neural Architecture Search (NAS) and discuss bilevel optimization, scalability, and adaptation to environmental constraints.
@@ -104,7 +141,6 @@ We explore the adaptation of NEAT for Neural Architecture Search (NAS) and discu
 We investigate the effectiveness of non-gradient-based evolutionary algorithms (EAs) for training deep neural networks on reinforcement learning tasks, such as Atari games.
 
 Now, a burning question is: why bother when back-prop etc are like good enough no? (in NEAT paper as well check out...)
-<img width="250" alt="image" src="https://github.com/d-mihaila/NC-Project/assets/53557315/ebb38733-1ee2-4729-8ef6-33a0c218e83e">
 
 
 * basically *when* NE is good
@@ -161,5 +197,5 @@ We suggest potential directions for future research and improvements, including 
 ---
 
 # 8. References
-
+[@Stanley2002]: Stanley, K. O., & Miikkulainen, R. (2002). Evolving Neural Networks through Augmenting Topologies. Evolutionary Computation, 10(2), 99-127.
 
