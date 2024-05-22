@@ -64,7 +64,7 @@ Let's Start!
 
 <div style="display: flex; justify-content: space-between;">
   <div style="flex: 1; text-align: right;">
-    <a href="1_introduction.md" style="text-decoration: none; font-size: 1.2em; border: 1px solid #ccc; padding: 10px; display: inline-block;">Next: Introduction &raquo;</a>
+    <a href="https://d-mihaila.github.io/NC-Project/1_introduction.html" style="text-decoration: none; font-size: 1.2em; border: 1px solid #ccc; padding: 10px; display: inline-block;">Next: Introduction &raquo;</a>
   </div>
 </div>
 
