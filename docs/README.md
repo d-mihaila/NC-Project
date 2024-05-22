@@ -25,20 +25,51 @@
 # Introduction
 Welcome to the handbook for our educational project on the neuroevolution snake game. This guide aims to provide both introductory and detailed information about evolutionary algorithms, specifically focusing on the NeuroEvolution of Augmenting Topologies (NEAT) method.
 
-# Problem Statement
+## Learning Outcomes
+After working through our handbook, we expect you to have the following know-how's (please rephrase):
+* have a solid understanding of Neurovolution's origins
+* understand how NE works in general
+* understand the NEAT algorithm, in full
+* distinguish between variants of the method
+* understand NE's limitations
+* thus, know when NE is useful and when not
+* understand the proposed enhanced methods
+* be able to apply the algorithm yourself (maybe we should have a template / empty ish file for use in other cases)
+
+  
+## Project Overview
 Our project, named Snake-NE, aims to simplify the learning of NeuroEvolution (NE), a method that blends evolutionary algorithms with machine learning. We teach the NEAT method to evolve both the weights, biases, and topology of a neural network that learns to play the Snake game.
 
-# Motivation
+Now, we will more clearly introduce our project.
+In short, NE aims to improve the computation efficiency and performance of a neural network by not only changing the wrights of the network, but also evolve the network's architecture using evlutionary algorithms. Let's begin by clearly introducing all of these mentioned terms, to offer us a solid ground for the rest of this lesson.
+
+## Definitions
+**Neural Netoworks**
+
+**Reinforcement Learning**
+
+**Evolutionary Algorithms**
+
+## Motivation
 Snake-NE offers several benefits as an educational tool, making learning more engaging and accessible by using the simple yet fun Snake game to demonstrate complex neuroevolution concepts.
+
+
+*hint to the extensive literature review // talk here about then to use it briefly. 
+
 
 # Literature Review
 In this section, we review relevant literature that underpins our project and provides context for our methods and experiments.
 
+## NEAT paper
+
 ## Evolving Deep Network Architectures
 We explore the adaptation of NEAT for Neural Architecture Search (NAS) and discuss bilevel optimization, scalability, and adaptation to environmental constraints.
+* some extended methods
 
 ## Learning Atari Games using NE
 We investigate the effectiveness of non-gradient-based evolutionary algorithms (EAs) for training deep neural networks on reinforcement learning tasks, such as Atari games.
+* basically *when* NE is good
+
 
 # Methods
 This section details the setup and implementation of our Snake-NE project, including the NEAT algorithm and various experiments.
@@ -55,8 +86,8 @@ We investigate how different input features influence the snake's learning and s
 ## Ablation Experiments
 We analyze the essential components of the NEAT algorithm by systematically removing key components and observing their impact on performance.
 
-## Educational Website
-We developed an educational webpage featuring explanations, GIFs, videos, and links to the code, allowing users to experiment on their own.
+# Do It Yourself
+We prepared the google colab for you. Now, it's the time for you to have your first tries with the code, familiarise yourself with it before we go on implementing our methods. 
 
 # Results
 This section presents the outcomes of our experiments, focusing on input strategy experiments and ablation experiments.
@@ -66,6 +97,7 @@ We describe the results of various input strategy experiments, highlighting the 
 
 ## Ablation Experiments Results
 We discuss the findings from our ablation experiments, illustrating the importance of key components in the NEAT algorithm.
+
 
 # Discussion
 We reflect on the limitations of our project and propose future work to build on our findings.
