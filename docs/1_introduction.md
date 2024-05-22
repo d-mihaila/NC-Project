@@ -45,3 +45,14 @@ Snake-NE offers several benefits as an educational tool, making learning more en
 *hint to the extensive literature review // talk here about then to use it briefly. 
 
 ---
+
+
+<div style="display: flex; justify-content: space-between;">
+  <div>
+    <a href="index.md" style="text-decoration: none; font-size: 1.2em;">&laquo; Table of Contents</a>
+  </div>
+  <div>
+    <a href="2_literature_review.md" style="text-decoration: none; font-size: 1.2em;">Next: Literature Review &raquo;</a>
+  </div>
+</div>
+
