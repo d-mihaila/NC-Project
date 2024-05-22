@@ -1,4 +1,5 @@
 # Table of Contents
+NOTE: to add references later...!?
 
 - [1. Introduction](#1-introduction)
   - [1.1 Learning Outcomes](#11-learning-outcomes)
@@ -74,10 +75,25 @@ Snake-NE offers several benefits as an educational tool, making learning more en
 
 ---
 
+
+
 # 2. Literature Review
 In this section, we review relevant literature that underpins our project and provides context for our methods and experiments.
 
 ## 2.1 NEAT paper
+* first start off with the abstract re-worded
+* describe the aim  / promise
+
+This is the founding paper of the NeuroEvolution of Augmenting Topologies (NEAT) method. It shows its origins by first describing and then presenting the issues with the previous Topology and Weight Evolving Artificial Neural Networks (TWEANNs) method and explaining how it tackes these issues, creating NEAT. Finally and most importantly it proves its computational advantage and tests this through a series of ablation studies. The increased efficiency is thus thanks to:
+* 1. employing a principled (? the historical stuff) method of crossover of different topologies
+  2. protecting structural innovation using speciation (the shared fittness?)
+  3. incrementally growing from minimal structure
+
+[maybe i should only introduce the problems here using also some figures and then the solutions etc we describe in out methods section anyway no?!]
+
+* describe TWEANNs (maybe some of the background subchapters too....!?)
+* describe the problems with those TWEANNs as well -- with them figures
+* how does NEAT tackle them -- maybe just reference to our methods section
 
 
 ## 2.2 Evolving Deep Network Architectures
@@ -86,6 +102,11 @@ We explore the adaptation of NEAT for Neural Architecture Search (NAS) and discu
 
 ## 2.3 Learning Atari Games using NE
 We investigate the effectiveness of non-gradient-based evolutionary algorithms (EAs) for training deep neural networks on reinforcement learning tasks, such as Atari games.
+
+Now, a burning question is: why bother when back-prop etc are like good enough no? (in NEAT paper as well check out...)
+<img width="250" alt="image" src="https://github.com/d-mihaila/NC-Project/assets/53557315/ebb38733-1ee2-4729-8ef6-33a0c218e83e">
+
+
 * basically *when* NE is good
 
 ---
