@@ -72,6 +72,8 @@ Snake-NE offers several benefits as an educational tool, making learning more en
 
 *hint to the extensive literature review // talk here about then to use it briefly. 
 
+---
+
 # 2. Literature Review
 In this section, we review relevant literature that underpins our project and provides context for our methods and experiments.
 
@@ -85,6 +87,8 @@ We explore the adaptation of NEAT for Neural Architecture Search (NAS) and discu
 ## 2.3 Learning Atari Games using NE
 We investigate the effectiveness of non-gradient-based evolutionary algorithms (EAs) for training deep neural networks on reinforcement learning tasks, such as Atari games.
 * basically *when* NE is good
+
+---
 
 # 3. Methods
 This section details the setup and implementation of our Snake-NE project, including the NEAT algorithm and various experiments.
@@ -101,8 +105,12 @@ We investigate how different input features influence the snake's learning and s
 ## 3.4 Ablation Experiments
 We analyze the essential components of the NEAT algorithm by systematically removing key components and observing their impact on performance.
 
+---
+
 # 4. Do It Yourself
 We prepared the google colab for you. Now, it's the time for you to have your first tries with the code, familiarise yourself with it before we go on implementing our methods. 
+
+---
 
 # 5. Results
 This section presents the outcomes of our experiments, focusing on input strategy experiments and ablation experiments.
@@ -113,6 +121,8 @@ We describe the results of various input strategy experiments, highlighting the 
 ## 5.2 Ablation Experiments Results
 We discuss the findings from our ablation experiments, illustrating the importance of key components in the NEAT algorithm.
 
+---
+
 # 6. Discussion
 We reflect on the limitations of our project and propose future work to build on our findings.
 
@@ -122,5 +132,13 @@ We acknowledge the constraints and limitations of our project, such as computati
 ## 6.2 Future Work
 We suggest potential directions for future research and improvements, including exploring new input strategies, fitness function design, and comparisons with reinforcement learning.
 
+---
+
 # 7. Conclusion
 [To be written]
+
+---
+
+# 8. References
+
+
