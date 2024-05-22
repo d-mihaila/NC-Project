@@ -46,13 +46,12 @@ Snake-NE offers several benefits as an educational tool, making learning more en
 
 ---
 
-
 <div style="display: flex; justify-content: space-between;">
-  <div>
-    <a href="index.md" style="text-decoration: none; font-size: 1.2em;">&laquo; Table of Contents</a>
+  <div style="flex: 1; text-align: left;">
+    <a href="index.md" style="text-decoration: none; font-size: 1.2em; border: 1px solid #ccc; padding: 10px; display: inline-block;">&laquo; Table of Contents</a>
   </div>
-  <div>
-    <a href="2_literature_review.md" style="text-decoration: none; font-size: 1.2em;">Next: Literature Review &raquo;</a>
+  <div style="flex: 1; text-align: right;">
+    <a href="2_literature_review.md" style="text-decoration: none; font-size: 1.2em; border: 1px solid #ccc; padding: 10px; display: inline-block;">Next: Literature Review &raquo;</a>
   </div>
 </div>
 
