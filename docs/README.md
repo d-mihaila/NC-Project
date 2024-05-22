@@ -131,19 +131,64 @@ Finally, joining all the 3 solutions together, we obtain this relationship:
 
 They also conducted the Ablation experiemnts we will describe in the following chapters as well...!?
 
-Maybe add here some description about conclusion of when this NE is good 
+Maybe add here some description about conclusion of when this NE is good .... // link to the 3rd paper 
+
+
+
 
 ## 2.2 Evolving Deep Network Architectures
 We explore the adaptation of NEAT for Neural Architecture Search (NAS) and discuss bilevel optimization, scalability, and adaptation to environmental constraints.
-* some extended methods
+
+Risto Miikkulainen, a co-creator of NEAT, recently explored the adaptation of NEAT for Neural Architecture Search (NAS) in his paper, "Evolving Deep Neural Networks" \cite{miikkulainen2024evolving}. This approach evolves generations of Deep Neural Networks (DNNs) through processes like crossover and mutations, similar to those used in NEAT. However, the key difference is that each link in the genome represents entire neural network layers and their connections, rather than just individual nodes and connections. The fitness of each network is evaluated based on its training performance over a limited set number of epochs using gradient descent.
+
+### Adaptation
+The study also noted an interesting adaptation to environmental constraints: the necessity to only partially train networks due to limited resources caused the evolutionary process to bias the evolution toward fast learners rather than top performers. This reveals that evolution can be steered toward goals other than sheer accuracy, such as reducing training time, execution speed, or the memory footprint of the network. This could be extremely useful for edge devices or specialized applications where the environment dictates the unique architectural needs.
+
+We would like to highlight this aspect of neuroevolution in our product as well. We will do this by adding an experiment where the snake has a limited time to eat an apple, which should encourage the development of faster, more efficient snakes rather than just longer ones. This will help students see how adapting to constraints can direct evolutionary processes in neural networks.
+
+### Other
+Two additional important concepts introduced in this paper are: Bilevel optimization and scalability. We did not introduce them in our code in this project due to time contraints but are a great direction to go into for an extension. Feel free to skip this section if you are only interested in the concepts relevant to our implementation.
+
+#### Bilevel Optimization
+Neural Architecture Search typically focuses on finding the best network topology and hyperparameters. Traditionally, this search is done without gradient information, relying on manual adjustments or scalable architectures like EfficientNet \cite{tan2019efficientnet}. Manual tuning is often limited by the complex interactions between parameters, covering only a small portion of the possible configurations.
+
+We currently handle a simplified parameter set with ten free variables, though NEAT supports up to 38. Managing these parameters manually is challenging and inefficient. Implementing bilevel optimization, as discussed in the literature review, could automate the tuning of NEAT's hyperparameters through an evolutionary process. This approach would require access to multiple CPUs since each optimization cycle would involve running a series of genetic algorithm simulations.
+
+A solution for this is bilevel optimization. This method uses a high-level evolutionary process to search for network parameters more effectively. This method can be applied not only in NAS but also in parameter searches for other complex systems \cite{liang2015evolutionary}. The paper presents a hybrid model where neuroevolution manages the high-level optimization, and either backpropagation or further neuroevolution fine-tunes the weights. This dual strategy provides a valuable learning opportunity for students, demonstrating how integrating different methods can give better results and that solutions are not restricted to a single technique.
+
+In our Snake-NE project, while we face challenges similar to those in manual tuning, we plan not to adopt this method directly. We believe that from an educational standpoint, achieving the best performance parameters is less critical as long as the learning experience remains effective. However, we address the challenges of manual tuning and present bilevel optimization as a practical alternative to consider.
+
+#### Scalability
+One of the primary advantages of using neuroevolution for Neural Architecture Search (NAS) is its scalability \cite{salimans2017evolution}. Once established, neuroevolution can function on a large scale and operate in parallel with little human intervention, automatically exploring the best architectures across vast parameter spaces. The paper points out that because Evolutionary Algorithms are less prone to getting stuck in local minima, they are able to discover networks that surpass manually created designs or a single design that has stopped improving due to local minima \cite{papavasileiou2021systematic}.
+
+However, the elephant in the room is the significant computational resources required for this process, as each fitness evaluation involves training a deep neural network. Despite this, the authors mention that with the increasing availability of extensive computational resources through cloud and grid computing, the evolutionary optimization of neural networks is becoming a more feasible approach for the future. This method can fully leverage such resources due to its high degree of parallelizability.
+
+Due to the high computational costs and our aim to stay focused on specific topics, we have decided not to include this approach in our project. Nevertheless, we addressed this topic because its scalability is crucial for real-world applications beyond simple game models. If more computational resources were available, one could consider evolving (deep) convolutional networks trained directly on game pixel data, which would introduce less human bias.
+
 
 ## 2.3 Learning Atari Games using NE
 We investigate the effectiveness of non-gradient-based evolutionary algorithms (EAs) for training deep neural networks on reinforcement learning tasks, such as Atari games.
 
-Now, a burning question is: why bother when back-prop etc are like good enough no? (in NEAT paper as well check out...)
+Now, a burning question is: why bother when back-prop etc are like good enough?
+
+### Learning Atari Games using NE
+The concisely named paper "Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning" explores whether non-gradient-based evolutionary algorithms (EAs) can be effective at the scale of deep neural networks (DNNs) \cite{such2017deep}. Instead of using NEAT, it evolves the weights and biases of a fixed DNN architecture with a simple, gradient-free, population-based genetic algorithm (GA). This method has shown strong performance on challenging deep reinforcement learning (RL) problems, including Atari games and humanoid locomotion. What stands out in this research is the scale: the team managed to evolve a network with over four million parameters, achieving state-of-the-art results in RL challenges using just a high-end desktop computer.
+
+#### Zero-gradient method
+Contrary to expectations, GAs have proven to be a competitive choice for RL, performing comparably to well-established methods like A3C, DQN, and ES. This suggests that in RL, where obtaining reliable gradient information is particularly difficult, EAs can be a valuable tool. The gradient in DQN can be biased, and in the complex, hard-to-navigate landscape of RL, EAs offer a viable alternative. This insight reinforces the notion that following the gradient isn't always the best approach for optimizing performance.
+
+While we initially planned a brief comparison with other RL methods, this paper might serve as a more engaging follow-up for interested readers, allowing us to focus more on other areas. The key takeaway for students is understanding when NE methods are advantageous: particularly when gradient information is unreliable, unavailable, or when sparse computational resources exist.
+
+#### Random Search
+We were also curious about how NE compares to simple random search strategies. Surprisingly, the study found that while the GA consistently outperformed random search, random search still surpassed more advanced deep RL algorithms in some Atari games. This suggests that local optima, saddle points, noisy gradients, or other obstacles can hinder progress in methods based on backpropagation.
+
+However, the broad applicability of EAs can lead to them being misused as a 'one-size-fits-all' solution for problems that might be more effectively addressed by using a heuristic based on the mathematical structure of the problem. For many problems where quality gradient information is available, gradient-based optimization algorithms will typically outperform evolutionary algorithms.
+
+This highlights another domain where NE excels: although they have a wide range of applications, EAs particularly shine when augmented with domain-specific knowledge. Essentially, an EA is a form of biased random search, and the design of this bias falls to the researcher. We plan to demonstrate this by explaining how incorporating domain knowledge affects performance and what happens when it is removed, through ablation experiments, which will be detailed later.
 
 
-* basically *when* NE is good
+* basically *when* NE is good ----- make a note // describe this better later on....!?
+
 
 ---
 
@@ -198,4 +243,24 @@ We suggest potential directions for future research and improvements, including 
 
 # 8. References
 [@Stanley2002]: Stanley, K. O., & Miikkulainen, R. (2002). Evolving Neural Networks through Augmenting Topologies. Evolutionary Computation, 10(2), 99-127.
+
+[@Miikkulainen2024]: Miikkulainen, R., J. Liang, E. Meyerson, et al. 2024. “Evolving Deep Neural Networks.” In Artificial Intelligence in the Age of Neural Networks and Brain Computing, 269–287. Elsevier.
+
+[@Such2017]: Such, F. P., V. Madhavan, E. Conti, J. Lehman, K. O. Stanley, and J. Clune. 2017. “Deep Neuroevolution: Genetic Algorithms Are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning.” arXiv preprint arXiv:1712.06567.
+
+[@Eiben1991]: Eiben, A. E., E. H. Aarts, and K. M. Van Hee. 1991. “Global Convergence of Genetic Algorithms: A Markov Chain Analysis.” In Parallel Problem Solving from Nature: 1st Workshop, PPSN I Dortmund, FRG, October 1–3, 1990 Proceedings 1, 3–12. Springer.
+
+[@Ehlis2000]: Ehlis, T., J. Hattan, and D. Sikora. 2000. “Application of Genetic Programming to the Snake Game.” Gamedev.Net 175.
+
+[@VigneshKumar2020]: Vignesh Kumar, K., R. Sourav, C. Shunmuga Velayutham, and V. Balasubramanian. 2020. “Fitness Function Design for Neuroevolution in Goal-Finding Game Environments.” In Advances in Computational Collective Intelligence: 12th International Conference, ICCCI 2020, Da Nang, Vietnam, November 30–December 3, 2020, Proceedings 12, 503–515. Springer.
+
+[@Gaier2019]: Gaier, A., and D. Ha. 2019. “Weight Agnostic Neural Networks.” Advances in Neural Information Processing Systems 32.
+
+[@Tan2019]: Tan, M., and Q. Le. 2019. “EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks.” In International Conference on Machine Learning, 6105–6114. PMLR.
+
+[@Liang2015]: Liang, J. Z., and R. Miikkulainen. 2015. “Evolutionary Bilevel Optimization for Complex Control Tasks.” In Proceedings of the 2015 Annual Conference on Genetic and Evolutionary Computation, 871–878.
+
+[@Salimans2017]: Salimans, T., J. Ho, X. Chen, S. Sidor, and I. Sutskever. 2017. “Evolution Strategies as a Scalable Alternative to Reinforcement Learning.” arXiv preprint arXiv:1703.03864.
+
+[@Papavasileiou2021]: Papavasileiou, E., J. Cornelis, and B. Jansen. 2021. “A Systematic Literature Review of the Successors of 'Neuroevolution of Augmenting Topologies'.” Evolutionary Computation 29 (1): 1–73.
 
