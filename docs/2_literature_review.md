@@ -114,4 +114,14 @@ This highlights another domain where NE excels: although they have a wide range 
 * basically *when* NE is good ----- make a note // describe this better later on....!?
 
 
+<div style="display: flex; justify-content: space-between;">
+  <div style="flex: 1; text-align: left;">
+    <a href="1_introduction.md" style="text-decoration: none; font-size: 1.2em; border: 1px solid #ccc; padding: 10px; display: inline-block;">&laquo; Previous: Introduction</a>
+  </div>
+  <div style="flex: 1; text-align: right;">
+    <a href="3_methods.md" style="text-decoration: none; font-size: 1.2em; border: 1px solid #ccc; padding: 10px; display: inline-block;">Next: Methods &raquo;</a>
+  </div>
+</div>
+
+
 ---
